@@ -1,0 +1,42 @@
+/* Custom CSS */
+
+.navbar {
+    background-color: white !important;
+}
+
+.navbar-brand {
+    margin-left: 15px;
+}
+
+.navbar-nav {
+    margin-right: 15px;
+}
+
+.container {
+    text-align: center;
+    margin-top: 50px; /* Adjust the margin-top to move the table down */
+}
+
+.profile-table {
+    margin: auto;
+    width: 50%; /* Make the table medium-sized */
+    margin-top: 99px;
+    margin-bottom: 10px; /* Space between the table and the button */
+}
+
+.table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Stack elements vertically */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Space between the table and the button */
+}
+
+.button-container .btn-warning {
+    margin-left: 20px; /* Space between the table and the button */
+}
