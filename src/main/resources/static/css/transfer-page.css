@@ -1,0 +1,45 @@
+/* Custom styles for the Transfer page */
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: white !important;
+}
+.navbar-brand {
+    font-weight: bold;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.btn-orange {
+    background-color: orange;
+    color: white;
+    border: none;
+}
+
+.transactions-table {
+    margin-top: 20px;
+    border: 1px solid #dee2e6;
+}
+
+.transactions-table th, .transactions-table td {
+    text-align: left;
+    padding: 10px;
+    border-top: 1px solid #dee2e6;
+}
+
+.transactions-table thead th {
+    background-color: #f2f2f2;
+}
+
+.transactions-table th:first-child, .transactions-table td:first-child {
+    border-left: none;
+}
+
+.transactions-table th:last-child, .transactions-table td:last-child {
+    border-right: none;
+}

@@ -48,6 +48,7 @@ public class SecurityConfiguration {
 	            )
 	            .formLogin(form -> form
 	                .loginPage("/login")
+	                .defaultSuccessUrl("/profil", true) // Specify the default page after successful login
 	                .permitAll()
 	            )
 	            .logout(logout -> logout

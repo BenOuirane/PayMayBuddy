@@ -17,7 +17,7 @@ public class MainContoller {
 		return "login-page";
 	}
 	
-	@GetMapping("/")
+	@GetMapping("/profil")
 	public String profil(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
@@ -34,4 +34,15 @@ public class MainContoller {
 	    		return "profil-page";
 	}
 
+	
+	@GetMapping("/ajouter-relation")
+    public String ajouterRelationPage() {
+        return "ajouter-relation"; // Return the name of the Thymeleaf template for the ajouter-relation page
+    }
+	
+	@GetMapping("/transfer")
+    public String transferAmountPage() {
+        return "transfer-page"; // Return the name of the Thymeleaf template for the ajouter-relation page
+    }
+	
 }
