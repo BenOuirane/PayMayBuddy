@@ -23,7 +23,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" th:href="@{/transfer}">Transférer</a>
+             <!--  <a class="nav-link active" th:href="@{/transfer}">Transférer</a>  -->      
+                   <a class="nav-link active" th:href="@{/transfer/page}">Transférer</a>     
+                    
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/profil}">Profil</a>
@@ -41,26 +43,34 @@
 
 <!-- Transfer Section -->
 <div class="container mt-5">
-    <form>
+<div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+        <p th:text="${errorMessage}"></p>
+    </div>
+    <div th:if="${successMessage}" class="alert alert-success" role="alert">
+        <p th:text="${successMessage}"></p>
+    </div>
+
+    <form id="relationForm"  th:action="@{/processTransfer}" method="post">
         <div class="form-row">
             <div class="form-group col-md-4">
                <label for="relationSearch"><!--  Rechercher une relation --></label> 
                <select id="relationOption" name="relationOption" class="form-control">
-                <!-- Options to be filled dynamically -->
-                <option value="relation1">Relation 1</option>
-                <option value="relation2">Relation 2</option>
-               </select>            </div>
+                 <option value="">Sélectionnez une option</option>
+                 <option th:each="connection : ${connections}" th:value="${connection.email}" th:text="${connection.username}">Relation</option>
+               </select>           
+            </div>
             <div class="form-group col-md-4">
               <label for="description"> <!--Description-->  </label>  
-                <input type="text" class="form-control" id="description" placeholder="Description">
+                <input type="text" class="form-control" id="description" name="description" placeholder="Description">
             </div>
             <div class="form-group col-md-2">
             <label for="amount"> <!-- Montant--></label>   
-                <input type="number" class="form-control" id="amount" placeholder="Montant">
+                <input type="number" class="form-control" id="amount" name="amount" placeholder="Montant">
             </div>
             <div class="form-group col-md-2">
-                <button type="submit" class="btn btn-primary mt-4">Payer</button>
+                <button type="button" class="btn btn-primary mt-4" onclick="confirmAddRelation()">Payer</button>
             </div>
+            
         </div>
     </form>
 
@@ -93,11 +103,38 @@
         </table>
     </div>
 </div>
-
+<!-- Modal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Confirmer le transfert d'argent</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Êtes-vous sûr de vouloir transférer cet argent?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" onclick="submitForm()">Confirmer</button>
+                </div>
+            </div>
+        </div>
+    </div>
 <!-- Bootstrap JS and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+        function confirmAddRelation() {
+            $('#confirmModal').modal('show');
+        }
 
+        function submitForm() {
+            $('#relationForm').submit();
+        }
+</script>
 </body>
 </html>

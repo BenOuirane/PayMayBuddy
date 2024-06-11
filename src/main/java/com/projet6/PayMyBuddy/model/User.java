@@ -112,6 +112,18 @@ public class User {
     public User() {
 		
 	}
+
+	public User(Long id, double wealth, String username, String email,
+			String password, String roles) {
+		super();
+		this.id = id;
+		this.wealth = wealth;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+	}
+    
+    
 	
 
 }

@@ -40,9 +40,6 @@ public class MainContoller {
         return "ajouter-relation"; // Return the name of the Thymeleaf template for the ajouter-relation page
     }
 	
-	@GetMapping("/transfer")
-    public String transferAmountPage() {
-        return "transfer-page"; // Return the name of the Thymeleaf template for the ajouter-relation page
-    }
+	
 	
 }

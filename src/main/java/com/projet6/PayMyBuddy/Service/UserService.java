@@ -10,5 +10,6 @@ import com.projet6.PayMyBuddy.model.User;
 public interface UserService extends UserDetailsService{
 	
 	User saveUser(UserRegistrationDto userRegistrationDto);
+	User findByEmail(String email);
 
 }
