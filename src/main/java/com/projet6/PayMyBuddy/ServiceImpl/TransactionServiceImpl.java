@@ -1,12 +1,13 @@
 package com.projet6.PayMyBuddy.ServiceImpl;
 
 import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import com.projet6.PayMyBuddy.Service.TransactionService;
 import com.projet6.PayMyBuddy.Service.UserService;
 import com.projet6.PayMyBuddy.exception.UserNotFoundException;
@@ -65,6 +66,12 @@ public class TransactionServiceImpl implements TransactionService{
         transaction.setAmount(amount);
         transaction.setTransactionDate(new Date());
         transactionRepository.save(transaction);
+    }
+
+	@Override
+	public Page<Transaction> getTransactionsForUser(String userEmail, int page, int size) {
+		Pageable pageable = PageRequest.of(page, size);
+        return transactionRepository.findBySenderEmail(userEmail, pageable);
     }
 
 }

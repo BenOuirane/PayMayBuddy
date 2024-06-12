@@ -19,13 +19,11 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
              <!--  <a class="nav-link active" th:href="@{/transfer}">Transférer</a>  -->      
-                   <a class="nav-link active" th:href="@{/transfer/page}">Transférer</a>     
-                    
+                   <a class="nav-link active" th:href="@{/transfer/page}">Transférer</a>                        
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/profil}">Profil</a>
@@ -88,21 +86,35 @@
             </thead>
             <tbody>
                 <!-- Sample rows for demonstration purposes -->
-                <tr>
-                    <td>John Doe</td>
-                    <td>Dinner</td>
-                    <td>50.00€</td>
-                </tr>
-                <tr>
-                    <td>Jane Smith</td>
-                    <td>Movie Tickets</td>
-                    <td>30.00€</td>
-                </tr>
+               <tr th:each="transaction : ${transactionPage.content}">
+                <td th:text="${transaction.receiver.username}">Relation</td>
+                <td th:text="${transaction.description}">Description</td>
+                <td th:text="${transaction.amount + '€'}">Montant</td>
+            </tr>
                 <!-- Add more rows as needed -->
             </tbody>
         </table>
+        
+<!-- Pagination Links -->
+<div>
+    <ul class="pagination">
+        <li th:if="${transactionPage.hasPrevious()}" class="page-item">
+            <a class="page-link" th:href="@{/transfer/page(page=${transactionPage.number - 1})}">Précédent</a>
+        </li>
+        <li th:each="i : ${#numbers.sequence(0, transactionPage.totalPages - 1)}" class="page-item" th:classappend="${i == transactionPage.number} ? 'active'">
+            <a class="page-link" th:href="@{/transfer/page(page=${i})}" th:text="${i + 1}">1</a>
+        </li>
+        <li th:if="${transactionPage.hasNext()}" class="page-item">
+            <a class="page-link" th:href="@{/transfer/page(page=${transactionPage.number + 1})}">Suivant</a>
+        </li>
+    </ul>
+</div>
+
     </div>
 </div>
+
+
+
 <!-- Modal -->
     <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
