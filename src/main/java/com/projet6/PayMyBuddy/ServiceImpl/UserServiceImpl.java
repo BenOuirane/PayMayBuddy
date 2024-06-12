@@ -6,12 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
 import com.projet6.PayMyBuddy.Service.UserService;
 import com.projet6.PayMyBuddy.dto.UserRegistrationDto;
 import com.projet6.PayMyBuddy.model.Role;
 import com.projet6.PayMyBuddy.model.User;
 import com.projet6.PayMyBuddy.repository.UserRepository;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
@@ -72,12 +77,30 @@ public class UserServiceImpl implements UserService{
 	}
 	*/
 
-}
+	  }
 
 	@Override
 	public User findByEmail(String email) {
         return userRepository.findByEmail(email);
-	}
+	}	
+	
+	public boolean updateProfile(String username, String email, String password, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+        User currentUser = userRepository.findByEmail(userEmail);
 
+        if (currentUser != null) {
+            currentUser.setUsername(username);
+            currentUser.setEmail(email);
+         // Check if a new password is provided
+            if (!password.isEmpty()) {
+                currentUser.setPassword(passwordEncoder.encode(password));
+            }
+            userRepository.save(currentUser); // Méthode pour sauvegarder les modifications
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

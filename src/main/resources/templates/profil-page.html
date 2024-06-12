@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8">    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil - Pay My Buddy</title>
     <!-- Bootstrap CSS -->
@@ -39,32 +39,70 @@
     </div>
 </nav>
 
-<!-- User Data Display Section -->
+
 <div class="container mt-5">
-   <!--   <h2 class="text-center">Informations utilisateur</h2> -->
+<div th:if="${not #strings.isEmpty(successMessage)}" class="alert alert-success" role="alert">
+    <span th:text="${successMessage}"></span>
+</div>
+<div th:if="${not #strings.isEmpty(errorMessage)}" class="alert alert-danger" role="alert">
+    <span th:text="${errorMessage}"></span>
+</div>
     <div class="table-responsive">
         <table class="table table-borderless profile-table">
             <tbody>
                 <tr>
                     <th scope="row">Username</th>
-                    <td><span th:text="${username}"> User</span></td><!-- User's Username -->
-            <!--  <td><input type="text" id="username" name="username" class="form-control" placeholder="Nouveau username" autocomplete="username"></td> -->
+                    <td><span th:text="${username}">User</span></td>
                 </tr>
                 <tr>
                     <th scope="row">Mail</th>
-                    <td th:text="${email}">Email</td><!-- User's Username -->
-             <!--   <td><input type="email" id="email" name="email" class="form-control" placeholder="Nouveau email" autocomplete="email"></td> --> 
+                    <td th:text="${email}">Email</td>
                 </tr>
                 <tr>
                     <th scope="row">Mot de passe</th>
-                    <td th:text="${password}">Password</td><!-- User's Username -->
-               <!-- <td><input type="password" id="password" name="password" class="form-control" placeholder="Nouveau mot de passe" autocomplete="new-password"></td>  -->
-                    <td><button type="button" class="btn btn-warning">Modifier</button></td>
+                    <td>********</td>
+                    <td><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editProfileModal">Modifier</button></td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
+
+
+
+<!-- Modal for Editing Profile -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel">Modifier Profil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+    <form th:action="@{/registration/updateProfile}" method="post">
+        <div class="form-group">
+            <label for="username">Nouveau nom d'utilisateur</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Nouveau nom d'utilisateur" th:value="${username}" autocomplete="username">
+        </div>
+        <div class="form-group">
+            <label for="email">Nouveau email</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Nouveau email" th:value="${email}" autocomplete="email">
+        </div>
+        <div class="form-group">
+            <label for="password">Nouveau mot de passe</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Nouveau mot de passe" autocomplete="new-password">
+        </div>
+        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+    </form>
+</div>
+
+        </div>
+    </div>
+</div>
+
+
 
 <!-- Bootstrap JS and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
