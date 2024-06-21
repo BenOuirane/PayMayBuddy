@@ -8,6 +8,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import com.projet6.PayMyBuddy.Service.UserService;
@@ -20,6 +28,12 @@ public class SecurityConfiguration {
 	 @Autowired
 	 private UserService userService;
 	 private final PasswordEncoder passwordEncoder;
+	 
+	 @Autowired
+	 private CustomSuccessHandler customAuthenticationSuccessHandler;
+	 
+	 @Autowired
+	    private CustomOAuth2UserService customOAuth2UserService;
  
 	 @Autowired
 	    public SecurityConfiguration(UserService userService, PasswordEncoder passwordEncoder) {
@@ -43,8 +57,16 @@ public class SecurityConfiguration {
 	 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 	        http
 	            .authorizeHttpRequests(authorize -> authorize
-	                .requestMatchers("/registration**", "/js/**", "/css/**", "/img/**", "/webjars/**").permitAll()
-	                .anyRequest().authenticated()
+	                .requestMatchers("/registration**",
+	                		         "/transfer/**", 
+	                		         "/addRelation/**",  
+	                		         "/oauth2/authorization/**",
+	                		         "/js/**", 
+	                		         "/css/**", 
+	                		         "/img/**", 
+	                		         "/webjars/**")
+	                .permitAll()
+	                .anyRequest().authenticated()	            
 	            )
 	            .formLogin(form -> form
 	                .loginPage("/login")
@@ -57,10 +79,24 @@ public class SecurityConfiguration {
 	                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 	                 .logoutSuccessUrl("/login?logout")
 	            	 .permitAll()
-	            );
-
+	            )
+	            .oauth2Login(oauth2 -> oauth2
+	                    .loginPage("/login")
+	              //      .defaultSuccessUrl("/profil", true)
+	                    .userInfoEndpoint(userInfo -> userInfo
+	                        .userService(oAuth2UserService())
+	                    )
+	                    .successHandler(customAuthenticationSuccessHandler)
+	                );
 	        return http.build();
 	    }
+	 
+	   
 
+	 @Bean
+	 public OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService() {
+	        return new DefaultOAuth2UserService();
+	    }
+	 
 	    
 }

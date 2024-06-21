@@ -86,7 +86,7 @@
             </thead>
             <tbody>
                 <!-- Sample rows for demonstration purposes -->
-               <tr th:each="transaction : ${transactionPage.content}">
+               <tr th:each="transaction : ${transactionPage?.content}">
                 <td th:text="${transaction.receiver.username}">Relation</td>
                 <td th:text="${transaction.description}">Description</td>
                 <td th:text="${transaction.amount + '€'}">Montant</td>
@@ -96,22 +96,22 @@
         </table>
         
 <!-- Pagination Links -->
+
 <div>
     <ul class="pagination">
-        <li th:if="${transactionPage.hasPrevious()}" class="page-item">
+        <li th:if="${transactionPage != null and transactionPage.hasPrevious()}" class="page-item">
             <a class="page-link" th:href="@{/transfer/page(page=${transactionPage.number - 1})}">Précédent</a>
         </li>
-        <li th:each="i : ${#numbers.sequence(0, transactionPage.totalPages - 1)}" class="page-item" th:classappend="${i == transactionPage.number} ? 'active'">
+        <li th:if="${transactionPage != null and transactionPage.totalPages != null}" th:each="i : ${#numbers.sequence(0, transactionPage.totalPages - 1)}" class="page-item" th:classappend="${i == transactionPage.number} ? 'active'">
             <a class="page-link" th:href="@{/transfer/page(page=${i})}" th:text="${i + 1}">1</a>
         </li>
-        <li th:if="${transactionPage.hasNext()}" class="page-item">
+        <li th:if="${transactionPage != null and transactionPage.hasNext()}" class="page-item">
             <a class="page-link" th:href="@{/transfer/page(page=${transactionPage.number + 1})}">Suivant</a>
         </li>
     </ul>
 </div>
 
-    </div>
-</div>
+ 
 
 <!-- Modal -->
     <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">

@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +18,9 @@ import com.projet6.PayMyBuddy.exception.UserNotFoundException;
 import com.projet6.PayMyBuddy.model.Transaction;
 import com.projet6.PayMyBuddy.model.User;
 import com.projet6.PayMyBuddy.repository.UserRepository;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 
 
@@ -49,33 +54,45 @@ public class ConnectionServiceImpl implements ConnectionService {
 	
 
 	@Override
-	public String getConnectionsToTransferAmounOfMoney(@RequestParam(defaultValue = "0") int page, Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    String userEmail = authentication.getName();
-	    User currentUser = userRepository.findByEmail(userEmail);
-	    if (currentUser != null) {
-	        Set<User> connections = currentUser.getConnections();
-	        model.addAttribute("connections", connections);
-	        // Afficher les connexions dans la console
-	        /*
-	        System.out.println("Current User: " + currentUser.getUsername());
-	        System.out.println("Connections: ");
-	        for (User connection : connections) {
-	            System.out.println(" - " + connection.getUsername() + " (" + connection.getEmail() + ")");
-	        }
-	        */
-	        
-	     // Récupérer les transactions de l'utilisateur actuel avec pagination
-            int size = 5; // Nombre de transactions par page
-            Page<Transaction> transactionPage = transactionService.getTransactionsForUser(userEmail, page, size);
-            model.addAttribute("transactionPage", transactionPage);
-            
-	    } else {
-	       // System.out.println("Utilisateur non trouvé pour l'email : " + userEmail);
-	        model.addAttribute("errorMessage", "Utilisateur non trouvé.");
-	    }
-        return "transfer-page"; // Return the name of the Thymeleaf template for the ajouter-relation page
-	}
+	public String getConnectionsToTransferAmounOfMoney(@RequestParam(defaultValue = "0") int page, Model model, HttpServletRequest request) {
+		 HttpSession session = request.getSession();
+		    String userEmail = (String) session.getAttribute("userEmail");
 
-   
+		    if (userEmail == null) {
+		        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		        if (authentication != null && authentication.isAuthenticated()) {
+		            Object principal = authentication.getPrincipal();
+		            if (principal instanceof UserDetails) {
+		                userEmail = ((UserDetails) principal).getUsername();
+		            } else if (principal instanceof OAuth2User) {
+		                userEmail = (String) ((OAuth2User) principal).getAttributes().get("email");
+		                if (userEmail == null) {
+		                    userEmail = (String) ((OAuth2User) principal).getAttributes().get("login") + "@github.com";
+		                }
+		            }
+		        }
+		    }
+
+		    if (userEmail == null) {
+		        model.addAttribute("errorMessage", "Utilisateur non trouvé.");
+		        return "transfer-page";
+		    }
+
+		    User currentUser = userRepository.findByEmail(userEmail);
+		    if (currentUser != null) {
+		        Set<User> connections = currentUser.getConnections();
+		        model.addAttribute("connections", connections);
+
+		        // Retrieve transactions of the current user with pagination
+		        int size = 5; // Number of transactions per page
+		        Page<Transaction> transactionPage = transactionService.getTransactionsForUser(userEmail, page, size);
+		        model.addAttribute("transactionPage", transactionPage);
+
+		    } else {
+		        model.addAttribute("errorMessage", "Utilisateur non trouvé.");
+		    }
+
+		    return "transfer-page"; // Return the name of the Thymeleaf template for the ajouter-relation page
+		}
+	
 }
