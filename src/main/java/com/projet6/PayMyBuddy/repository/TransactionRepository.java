@@ -14,5 +14,5 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
     Page<Transaction> findBySenderOrReceiver(User sender, User receiver, Pageable pageable);
     Page<Transaction> findBySenderEmail(String senderEmail, Pageable pageable);
     Page<Transaction> findBySenderEmailAndReceiverEmail(String senderEmail, String receiverEmail, Pageable pageable);
-
+    Page<Transaction> findBySenderEmailAndReceiverEmailNot(String senderEmail, String receiverEmail, Pageable pageable);
 }

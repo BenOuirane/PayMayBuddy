@@ -42,53 +42,73 @@ public class TransactionController {
 	   
 	   @GetMapping("/transfer/page")
 	   public String getRalation(@RequestParam(defaultValue = "0") int page, Model model, HttpServletRequest request) {
-	       return connectionService.getConnectionsToTransferAmounOfMoney(page, model, request);
+	       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	       String userEmail = authentication.getName();
+	       User currentUser = userService.findByEmail(userEmail);
+
+	       if (currentUser != null) {
+	           Set<User> connections = currentUser.getConnections();
+	           model.addAttribute("connections", connections);
+
+	           int size = 5; // Number of transactions per page
+	           Page<Transaction> transactionPage = transactionServiceImpl.getTransactionsForUser(userEmail, page, size);
+	           
+	           // Check if transactionPage is null and handle accordingly
+	           if (transactionPage != null) {
+	               model.addAttribute("transactionPage", transactionPage);
+	           } else {
+	               model.addAttribute("transactionPage", Page.empty());
+	           }
+	       } else {
+	           model.addAttribute("transactionPage", Page.empty());
+	       }
+
+	       return "transfer-page";
 	   }
 
-	    
-	    @PostMapping("/processTransfer")
-	    public String processTransfer(@RequestParam("relationOption") String receiverEmail,
-	                                  @RequestParam("description") String description,
-	                                  @RequestParam("amount") String amountStr,
-	                                  Model model) {
-	        try {
-	            double amount = Double.parseDouble(amountStr);
-	            transactionServiceImpl.createTransaction(receiverEmail, description, amount);
-	            model.addAttribute("successMessage", "Transfert réussi!");
-	        } catch (NumberFormatException e) {
-	            model.addAttribute("errorMessage", "Le montant doit être un nombre valide.");
-	        } catch (IllegalArgumentException | UserNotFoundException e) {
-	            model.addAttribute("errorMessage", e.getMessage());
-	        } catch (Exception e) {
-	            model.addAttribute("errorMessage", "Erreur lors du transfert: " + e.getMessage());
-	        }
-	        
-	     // Recharge les connexions pour les afficher à nouveau après le transfert
-	        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	        String userEmail = authentication.getName();
-	        User currentUser = userService.findByEmail(userEmail);
+	   @PostMapping("/processTransfer")
+	   public String processTransfer(@RequestParam("relationOption") String receiverEmail,
+	                                 @RequestParam("description") String description,
+	                                 @RequestParam("amount") String amountStr,
+	                                 Model model) {
+	       try {
+	           double amount = Double.parseDouble(amountStr);
+	           transactionServiceImpl.createTransaction(receiverEmail, description, amount);
+	           model.addAttribute("successMessage", "Transfert réussi!");
+	       } catch (NumberFormatException e) {
+	           model.addAttribute("errorMessage", "Le montant doit être un nombre valide.");
+	       } catch (IllegalArgumentException | UserNotFoundException e) {
+	           model.addAttribute("errorMessage", e.getMessage());
+	       } catch (Exception e) {
+	           model.addAttribute("errorMessage", "Erreur lors du transfert: " + e.getMessage());
+	       }
+	       
+	       // Recharge les connexions pour les afficher à nouveau après le transfert
+	       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	       String userEmail = authentication.getName();
+	       User currentUser = userService.findByEmail(userEmail);
 
-	        if (currentUser != null) {
-	            Set<User> connections = currentUser.getConnections();
-	            model.addAttribute("connections", connections);
+	       if (currentUser != null) {
+	           Set<User> connections = currentUser.getConnections();
+	           model.addAttribute("connections", connections);
 
-	            int page = 0; // Default page number
-	            int size = 5; // Nombre de transactions par page
-	            Page<Transaction> transactionPage = transactionServiceImpl.getTransactionsForUser(userEmail, page, size);
-	            
-	            // Check if transactionPage is null and handle accordingly
-	            if (transactionPage != null) {
-	                model.addAttribute("transactionPage", transactionPage);
-	            } else {
-	                model.addAttribute("transactionPage", Page.empty());
-	            }
-	        } else {
-	            model.addAttribute("transactionPage", Page.empty());
-	        }
+	           int page = 0; // Default page number
+	           int size = 5; // Nombre de transactions par page
+	           Page<Transaction> transactionPage = transactionServiceImpl.getTransactionsForUser(userEmail, page, size);
+	           
+	           // Check if transactionPage is null and handle accordingly
+	           if (transactionPage != null) {
+	               model.addAttribute("transactionPage", transactionPage);
+	           } else {
+	               model.addAttribute("transactionPage", Page.empty());
+	           }
+	       } else {
+	           model.addAttribute("transactionPage", Page.empty());
+	       }
 
-		        return "transfer-page";
+	       return "transfer-page";
+	   }
 
-	    }
 	    /*
 	    private String addConnectionsToModel(int page, Model model) {
 	        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
