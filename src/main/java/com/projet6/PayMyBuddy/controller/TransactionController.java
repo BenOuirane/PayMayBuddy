@@ -89,7 +89,7 @@ public class TransactionController {
 		        return "transfer-page";
 
 	    }
-	    
+	    /*
 	    private String addConnectionsToModel(int page, Model model) {
 	        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	        User currentUser = getCurrentUser(authentication);
@@ -110,6 +110,7 @@ public class TransactionController {
 	        }
 	        return "transfer-page";
 	    }
+	    
 
 	    private User getCurrentUser(Authentication authentication) {
 	        if (authentication != null) {
@@ -141,6 +142,7 @@ public class TransactionController {
 	        }
 	        return null;
 	    }
+	    */
 	    
  }
 

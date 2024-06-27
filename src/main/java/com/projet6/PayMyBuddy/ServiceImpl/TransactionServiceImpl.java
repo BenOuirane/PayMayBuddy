@@ -89,10 +89,11 @@ public class TransactionServiceImpl implements TransactionService{
 	 }
 
 
-	@Override
-	public Page<Transaction> getTransactionsForUser(String userEmail, int page, int size) {
-		Pageable pageable = PageRequest.of(page, size);
-        return transactionRepository.findBySenderEmail(userEmail, pageable);
-    }
+	 @Override
+	 public Page<Transaction> getTransactionsForUser(String userEmail, int page, int size) {
+	     Pageable pageable = PageRequest.of(page, size);
+	     return transactionRepository.findBySenderEmailAndReceiverEmailNot(userEmail, userEmail, pageable);
+	 }
+
 
 }
