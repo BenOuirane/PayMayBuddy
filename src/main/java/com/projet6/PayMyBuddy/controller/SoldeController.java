@@ -2,6 +2,8 @@ package com.projet6.PayMyBuddy.controller;
 
 import java.util.Collections;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,9 @@ import com.projet6.PayMyBuddy.model.User;
 @Controller
 public class SoldeController {
 	
+    private static final Logger logger = LoggerFactory.getLogger(SoldeController.class);
+
+    
     @Autowired
      SoldeServiceImpl  soldeService;
     
@@ -32,24 +37,28 @@ public class SoldeController {
 	    public String getSoldePage(@RequestParam(value = "page", defaultValue = "0") int page, 
 	                               @RequestParam(value = "size", defaultValue = "5") int size, 
 	                               Model model) {
-	        User currentUser = soldeService.getCurrentUser();
+	        logger.info("Fetching solde page with page number: {} and size: {}", page, size);
 
+	        if (page < 0) page = 0;
+	        if (size <= 0) size = 5;
+
+	        User currentUser = soldeService.getCurrentUser();
 	        if (currentUser != null) {
 	            double solde = currentUser.getWealth();
 	            model.addAttribute("solde", solde);
 
 	            Page<Transaction> transactionPage = soldeService.getSelfTransactions(currentUser.getEmail(), page, size);
-
 	            model.addAttribute("transactionPage", transactionPage != null ? transactionPage : Page.empty());
 	            model.addAttribute("transactions", transactionPage != null ? transactionPage.getContent() : Collections.emptyList());
 	        } else {
+	            logger.warn("Current user not found");
 	            model.addAttribute("solde", 0);
 	            model.addAttribute("transactionPage", Page.empty());
 	            model.addAttribute("transactions", Collections.emptyList());
 	        }
-
 	        return "solde-page";
 	    }
+
 		   
 	    @PostMapping("/Transfer")
 	    public String processTransfer(@RequestParam("description") String description,
