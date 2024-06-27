@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 
 import com.projet6.PayMyBuddy.Service.UserService;
 import com.projet6.PayMyBuddy.dto.UserRegistrationDto;
+import com.projet6.PayMyBuddy.exception.UserNotFoundException;
 import com.projet6.PayMyBuddy.model.Role;
 import com.projet6.PayMyBuddy.model.User;
 import com.projet6.PayMyBuddy.repository.UserRepository;
@@ -27,6 +28,8 @@ public class UserServiceImpl implements UserService{
 	UserRepository  userRepository;
 	@Autowired
     private PasswordEncoder passwordEncoder;
+    private final String SYSTEM_ACCOUNT_EMAIL = "system@domain.com"; // or any identifier for the system account
+
 
 	public UserServiceImpl(UserRepository userRepository) {
 		super();
@@ -102,5 +105,19 @@ public class UserServiceImpl implements UserService{
             return false;
         }
     }
+
+	@Override
+	public User findSystemAccount() {
+		User systemAccount = userRepository.findByEmail(SYSTEM_ACCOUNT_EMAIL);
+        if (systemAccount == null) {
+            throw new UserNotFoundException("Compte système non trouvé.");
+        }
+        return systemAccount;
+    }
+
+	@Override
+	public User save(User user) {
+        return userRepository.save(user);
+	}
 
 }

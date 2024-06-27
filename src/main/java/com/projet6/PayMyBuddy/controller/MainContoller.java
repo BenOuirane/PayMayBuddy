@@ -116,6 +116,12 @@ public class MainContoller {
         return "ajouter-relation"; // Return the name of the Thymeleaf template for the ajouter-relation page
     }
 	
+	@GetMapping("/sold")
+    public String soldePage() {
+        return "solde-page"; // Return the name of the Thymeleaf template for the solde-page page
+    }
+	
+	
 	
 	
 }

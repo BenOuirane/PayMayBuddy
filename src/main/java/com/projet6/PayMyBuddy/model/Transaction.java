@@ -26,6 +26,7 @@ public class Transaction {
     private String description;
     private Date transactionDate;
     private double amount;
+    private double fee; // Add this line
 	public int getIdTransaction() {
 		return idTransaction;
 	}
@@ -62,8 +63,15 @@ public class Transaction {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
+	public double getFee() {
+		return fee;
+	}
+	public void setFee(double fee) {
+		this.fee = fee;
+	}
 	public Transaction(int idTransaction, User sender, User receiver,
-			String description, Date transactionDate, double amount) {
+			String description, Date transactionDate, double amount,
+			double fee) {
 		super();
 		this.idTransaction = idTransaction;
 		this.sender = sender;
@@ -71,10 +79,15 @@ public class Transaction {
 		this.description = description;
 		this.transactionDate = transactionDate;
 		this.amount = amount;
+		this.fee = fee;
 	}
 	public Transaction() {
 		super();
 	}
-   
+	public Transaction(User currentUser, User receiver2, String description2,
+			Date date, double amount2, double fee2) {
+		// TODO Auto-generated constructor stub
+	}
 
+	
 }

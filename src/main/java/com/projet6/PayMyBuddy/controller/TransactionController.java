@@ -86,27 +86,6 @@ public class TransactionController {
 	            model.addAttribute("transactionPage", Page.empty());
 	        }
 
-	        
-	        /*
-	        // Recharge les connexions pour les afficher à nouveau après le transfert
-	        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	   //     String userEmail = authentication.getName();
-	      //  User currentUser = userService.findByEmail(userEmail);
-	        User currentUser = getCurrentUser(authentication);
-
-	        if (currentUser != null) {
-	            Set<User> connections = currentUser.getConnections();
-	            model.addAttribute("connections", connections);
-	            
-	            int size = 5; // Nombre de transactions par page
-	            Page<Transaction> transactionPage = transactionServiceImpl.getTransactionsForUser(currentUser.getEmail(), 0, size);
-	            model.addAttribute("transactionPage", transactionPage);
-	        }
-	        return connectionService.getConnectionsToTransferAmounOfMoney(0, model);
-
-	       // return "transfer-page";
-	        * 
-	        */
 		        return "transfer-page";
 
 	    }

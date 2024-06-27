@@ -2,7 +2,6 @@ package com.projet6.PayMyBuddy.ServiceImpl;
 
 import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.projet6.PayMyBuddy.Service.SocialNetworkUserService;
 import com.projet6.PayMyBuddy.dto.SocialNetworkUserDto;
@@ -16,9 +15,10 @@ public class SocialNetworkUserServiceImpl implements SocialNetworkUserService {
 
     @Autowired
     private UserRepository userRepo;
-    @Autowired
+    /*
+     *  @Autowired
     private PasswordEncoder passwordEncoder;
-    
+     */
 	@Override
 	public void save(SocialNetworkUserDto socialNetworkuserDto) {
 		User user = new User();
