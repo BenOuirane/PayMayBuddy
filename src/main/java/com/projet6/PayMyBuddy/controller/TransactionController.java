@@ -1,12 +1,10 @@
 package com.projet6.PayMyBuddy.controller;
 
-import java.util.Arrays;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,14 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.projet6.PayMyBuddy.Service.ConnectionService;
 import com.projet6.PayMyBuddy.Service.UserService;
 import com.projet6.PayMyBuddy.ServiceImpl.TransactionServiceImpl;
-import com.projet6.PayMyBuddy.ServiceImpl.UserServiceImpl.CustomUserDetails;
 import com.projet6.PayMyBuddy.exception.UserNotFoundException;
-import com.projet6.PayMyBuddy.model.Role;
 import com.projet6.PayMyBuddy.model.Transaction;
 import com.projet6.PayMyBuddy.model.User;
 import com.projet6.PayMyBuddy.repository.UserRepository;
-
 import jakarta.servlet.http.HttpServletRequest;
+
 
 @Controller
 public class TransactionController {

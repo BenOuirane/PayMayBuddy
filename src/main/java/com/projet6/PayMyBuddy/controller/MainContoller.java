@@ -3,12 +3,8 @@ package com.projet6.PayMyBuddy.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.projet6.PayMyBuddy.ServiceImpl.UserServiceImpl.CustomUserDetails;
-import com.projet6.PayMyBuddy.model.Role;
 import com.projet6.PayMyBuddy.model.User;
 import com.projet6.PayMyBuddy.repository.UserRepository;
-
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

@@ -93,9 +93,11 @@ public class SoldeServiceImpl implements SoldeService{
         return transactionRepository.findBySenderEmail(userEmail, pageable);
     }
 
+    /*
     private User findSystemAccount() {
         return userRepository.findByEmail("system@domain.com");
     }
+    */
 
     @Override
     public Page<Transaction> getSelfTransactions(String userEmail, int page, int size) {
