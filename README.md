@@ -29,7 +29,9 @@ Draw.io est un outil de modélisation visuelle en ligne qui permet de créer des
     <li> <strong>Flexibilité :  </strong>L'outil offre une grande variété de formes et de modèles personnalisables adaptés à la modélisation de bases de données.
 </li>
 </ul>
+
 ## contenu-du-diagramme-physique-de-données
+
 <br>
 
 Le diagramme physique de données que nous avons créé inclut les éléments suivants :
