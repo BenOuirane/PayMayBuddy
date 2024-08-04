@@ -16,7 +16,7 @@
          <div th:if="${param.logout}">
              <div class="alert alert-info" role="alert">You have been logged out.</div>
          </div>
-            <div class="title-box">Pay My Buddy</div>
+            <div class="title-box" role="titre de la modal">Pay My Buddy</div>
             <form th:action="@{/login}"  method="post">
                 <div class="form-group">
                     <input name ="username" type="email" class="form-control" id="email" placeholder="Email " autofocus="autofocus">
