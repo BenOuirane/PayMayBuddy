@@ -1,5 +1,5 @@
 <a href="https://www.raed.net/" target="_blank" title="https://www.raed.net/">
-<img src="https://www.raed.net/img?id=924785" border="0" alt="https://www.raed.net/img?id=924785" align="right" height="100" alt="ocr logo" title="logo openclasroom"  />
+<img src="doc/logo-openclassroom.jpg" border="0" alt="https://www.raed.net/img?id=924785" align="right" height="100" alt="ocr logo" title="logo openclasroom"  />
 </a>
 
 # Projet6-Concevez une application web Java de A à Z
