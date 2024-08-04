@@ -13,7 +13,7 @@
 - [Contenu du Diagramme Physique de Données](#contenu-du-diagramme-physique-de-données)
 - [Conclusion](#conclusion)
 
-##introduction
+#introduction
 Dans le cadre de notre projet 6 Concevez une application web Java de A à Z (Pay My Buddy une start-up technologique spécialisée dans les solutions bancaires et financières) de la formation Développeur d'application - Java,  il est crucial de disposer d'une représentation claire et précise de la structure physique de notre base de données. À cette fin, nous avons élaboré un diagramme physique de données (Physical Data Diagram) en utilisant l'outil Draw.io. Ce diagramme est essentiel pour comprendre comment les données sont stockées, organisées et interconnectées au niveau le plus fondamental du système.
 ##contexte-du-projet
 Pay My Buddy développe une application innovante qui facilite les transactions financières entre utilisateurs, offrant des solutions de paiement sécurisées et efficaces. En tant que développeur de logiciel junior, Notre rôle consiste à contribuer à la conception et à la mise en œuvre de la base de données qui soutient cette application. Le diagramme physique de données joue un rôle central dans cette démarche, car il décrit en détail les tables, les colonnes, les types de données, les clés primaires et étrangères, ainsi que les relations entre les différentes entités de la base de données.
