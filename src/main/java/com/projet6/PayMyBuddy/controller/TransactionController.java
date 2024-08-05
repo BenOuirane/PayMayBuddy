@@ -78,7 +78,7 @@ public class TransactionController {
 	       } catch (Exception e) {
 	           model.addAttribute("errorMessage", "Erreur lors du transfert: " + e.getMessage());
 	       }
-	       
+	      
 	       // Recharge les connexions pour les afficher à nouveau après le transfert
 	       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	       String userEmail = authentication.getName();
