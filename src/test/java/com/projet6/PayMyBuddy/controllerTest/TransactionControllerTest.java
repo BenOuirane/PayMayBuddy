@@ -113,11 +113,6 @@ public class TransactionControllerTest {
                 .andExpect(view().name("transfer-page"))
                 .andExpect(model().attribute("transactionPage", Page.empty()));
     }
-    
-    
-    
-    
-    
    
     @Test
     public void testProcessTransfer_Success() throws Exception {
