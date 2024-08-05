@@ -33,15 +33,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.ui.Model;
-
 import com.projet6.PayMyBuddy.Service.UserService;
 import com.projet6.PayMyBuddy.ServiceImpl.SoldeServiceImpl;
 import com.projet6.PayMyBuddy.ServiceImpl.TransactionServiceImpl;
 import com.projet6.PayMyBuddy.exception.UserNotFoundException;
 import com.projet6.PayMyBuddy.model.Transaction;
 import org.springframework.security.core.userdetails.User;
-
 
 
 @SpringBootTest
@@ -131,7 +128,7 @@ public class SoldeControllerTest {
 
 	        // Mock the getSoldePage method if necessary
 	        // Assuming getSoldePage returns a view name and model attributes
-	  //      when(soldeService.getSoldePage(0, 5, any(Model.class))).thenReturn("solde-page");
+	        // when(soldeService.getSoldePage(0, 5, any(Model.class))).thenReturn("solde-page");
 
 	        // Perform the POST request
 	        mockMvc.perform(post("/Transfer")
