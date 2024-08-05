@@ -56,6 +56,7 @@ public class SecurityConfiguration {
 	            .authorizeHttpRequests(authorize -> authorize
 	                .requestMatchers("/registration**",
 	                		         "/transfer/**",
+	                		         "/Transfer",
 	                		         "/solde/**", 
 	                		         "/addRelation/**",  
 	                		         "/oauth2/authorization/**",
