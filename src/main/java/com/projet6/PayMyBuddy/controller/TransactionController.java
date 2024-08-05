@@ -105,60 +105,6 @@ public class TransactionController {
 	       return "transfer-page";
 	   }
 
-	    /*
-	    private String addConnectionsToModel(int page, Model model) {
-	        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	        User currentUser = getCurrentUser(authentication);
 
-	        if (currentUser != null) {
-	            Set<User> connections = currentUser.getConnections();
-	            model.addAttribute("connections", connections);
-
-	            int size = 5; // Nombre de transactions par page
-	            Page<Transaction> transactionPage = transactionServiceImpl.getTransactionsForUser(currentUser.getEmail(), page, size);
-	            if (transactionPage != null) {
-	                model.addAttribute("transactionPage", transactionPage);
-	            } else {
-	                model.addAttribute("transactionPage", Page.empty());
-	            }
-	        } else {
-	            model.addAttribute("transactionPage", Page.empty());
-	        }
-	        return "transfer-page";
-	    }
-	    
-
-	    private User getCurrentUser(Authentication authentication) {
-	        if (authentication != null) {
-	            if (authentication.getPrincipal() instanceof CustomUserDetails) {
-	                CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-	                return userDetails.getUser();
-	            } else if (authentication.getPrincipal() instanceof OAuth2User) {
-	                OAuth2User oauthUser = (OAuth2User) authentication.getPrincipal();
-	                String email = oauthUser.getAttribute("email");
-	                String username = oauthUser.getAttribute("login");
-
-	                // Handle email for OAuth2 users (email may be null, use username if needed)
-	                if (email == null) {
-	                    email = username + "@github.com";
-	                }
-
-	                User user = userRepository.findByEmail(email);
-	                if (user == null) {
-	                    // If user is not found in the database, create a new user entry
-	                    user = new User();
-	                    user.setEmail(email);
-	                    user.setUsername(username);
-	                    user.setPassword(""); // No password for OAuth2 users
-	                    user.setRoles(Arrays.asList(new Role("ROLE_USER")));
-	                    userRepository.save(user);
-	                }
-	                return user;
-	            }
-	        }
-	        return null;
-	    }
-	    */
-	    
  }
 

@@ -58,6 +58,4 @@ public class UserConnectionsController {
 	    return "ajouter-relation"; // Retourner à la même page après le succès
 	}
 
-	
-	
 }

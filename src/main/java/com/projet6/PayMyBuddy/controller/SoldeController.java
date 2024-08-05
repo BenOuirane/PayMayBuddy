@@ -24,10 +24,10 @@ public class SoldeController {
     private static final Logger logger = LoggerFactory.getLogger(SoldeController.class);
 
     
-    @Autowired
-     SoldeServiceImpl  soldeService;
+       @Autowired
+       SoldeServiceImpl  soldeService;
     
-    @Autowired
+       @Autowired
 	   TransactionServiceImpl transactionServiceImpl;
 	   
 	   @Autowired

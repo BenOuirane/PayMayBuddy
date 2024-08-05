@@ -15,10 +15,7 @@ public class SocialNetworkUserServiceImpl implements SocialNetworkUserService {
 
     @Autowired
     private UserRepository userRepo;
-    /*
-     *  @Autowired
-    private PasswordEncoder passwordEncoder;
-     */
+
 	@Override
 	public void save(SocialNetworkUserDto socialNetworkuserDto) {
 		User user = new User();

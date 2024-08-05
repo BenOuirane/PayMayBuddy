@@ -45,18 +45,12 @@ public class UserRegistartionController {
 		    if (isUpdated) {
 		        redirectAttributes.addFlashAttribute("successMessage", "Profil mis à jour avec succès!");
 
-		  //      model.addAttribute("successMessage", "Profil mis à jour avec succès!");
-		        // Redirect to the profil endpoint to refresh the model attributes with the updated user data
-		 //       return "redirect:/profil";
 		    } else {
 		        redirectAttributes.addFlashAttribute("errorMessage", "Erreur lors de la mise à jour du profil.");
-
 		        model.addAttribute("errorMessage", "Erreur lors de la mise à jour du profil.");
-		        // Handle error case
-		   //     return "error-page"; // You can define an error page in your application
+
 		    }
     		return "redirect:/profil";
-
 	 }
 	
 }

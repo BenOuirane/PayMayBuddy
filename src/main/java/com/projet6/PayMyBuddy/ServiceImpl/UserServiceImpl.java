@@ -7,14 +7,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-
 import com.projet6.PayMyBuddy.Service.UserService;
 import com.projet6.PayMyBuddy.dto.UserRegistrationDto;
 import com.projet6.PayMyBuddy.exception.UserNotFoundException;
 import com.projet6.PayMyBuddy.model.Role;
 import com.projet6.PayMyBuddy.model.User;
 import com.projet6.PayMyBuddy.repository.UserRepository;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,7 +28,6 @@ public class UserServiceImpl implements UserService{
     private PasswordEncoder passwordEncoder;
     private final String SYSTEM_ACCOUNT_EMAIL = "system@domain.com"; // or any identifier for the system account
 
-
 	public UserServiceImpl(UserRepository userRepository) {
 		super();
 		this.userRepository = userRepository;
@@ -44,8 +41,7 @@ public class UserServiceImpl implements UserService{
         		             Arrays.asList(new Role("ROLE-USER")));
 		return userRepository.save(user);
 	}
-	
-	
+		
 	@Override   
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		User user = userRepository.findByEmail(email);
@@ -71,17 +67,9 @@ public class UserServiceImpl implements UserService{
 	    public User getUser() {
 	        return user;
 	    }
-   
-	/*
-	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles){
-		return roles.stream()
-				    .map(role -> new SimpleGrantedAuthority(role.getName()))
-				    .collect(Collectors.toList());
-	}
-	*/
-
 	  }
 
+	
 	@Override
 	public User findByEmail(String email) {
         return userRepository.findByEmail(email);
