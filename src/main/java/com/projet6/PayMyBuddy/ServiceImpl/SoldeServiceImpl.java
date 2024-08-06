@@ -26,7 +26,7 @@ public class SoldeServiceImpl implements SoldeService{
 
     @Autowired
     private TransactionRepository transactionRepository;
- 
+
 
     @Override
     public double getCurrentUserSolde() {
@@ -100,5 +100,6 @@ public class SoldeServiceImpl implements SoldeService{
         return transactionRepository.findBySenderEmailAndReceiverEmail(userEmail, userEmail, pageable);
     }
 
+    
 
 }
