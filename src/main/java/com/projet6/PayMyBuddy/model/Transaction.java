@@ -24,15 +24,18 @@ public class Transaction {
     @JoinColumn(name = "receiver_id")
     private User receiver;
     private String description;
-    private Date transactionDate;
+    @SuppressWarnings("unused")
+	private Date transactionDate;
     private double amount;
     private double fee; // Add this line
+    /*
 	public int getIdTransaction() {
 		return idTransaction;
 	}
 	public void setIdTransaction(int idTransaction) {
 		this.idTransaction = idTransaction;
 	}
+	*/
 	public User getSender() {
 		return sender;
 	}
@@ -51,12 +54,15 @@ public class Transaction {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	/*
 	public Date getTransactionDate() {
 		return transactionDate;
 	}
+	*/
 	public void setTransactionDate(Date transactionDate) {
 		this.transactionDate = transactionDate;
 	}
+
 	public double getAmount() {
 		return amount;
 	}
@@ -69,6 +75,7 @@ public class Transaction {
 	public void setFee(double fee) {
 		this.fee = fee;
 	}
+	/*
 	public Transaction(int idTransaction, User sender, User receiver,
 			String description, Date transactionDate, double amount,
 			double fee) {
@@ -81,6 +88,7 @@ public class Transaction {
 		this.amount = amount;
 		this.fee = fee;
 	}
+	*/
 	public Transaction() {
 		super();
 	}
