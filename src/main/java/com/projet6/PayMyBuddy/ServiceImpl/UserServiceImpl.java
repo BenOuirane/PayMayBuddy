@@ -28,10 +28,14 @@ public class UserServiceImpl implements UserService{
     private PasswordEncoder passwordEncoder;
     private final String SYSTEM_ACCOUNT_EMAIL = "system@domain.com"; // or any identifier for the system account
 
-	public UserServiceImpl(UserRepository userRepository) {
+	public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
 		super();
 		this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+
 	}
+
+
 
 	@Override
 	public User saveUser(UserRegistrationDto userRegistrationDto) {
