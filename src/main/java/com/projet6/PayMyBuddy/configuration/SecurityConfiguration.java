@@ -27,7 +27,7 @@ public class SecurityConfiguration {
 	 
 	 @Autowired
 	 private CustomSuccessHandler customAuthenticationSuccessHandler;
-	 /*
+	    /*
 	 @Autowired
 	    private CustomOAuth2UserService customOAuth2UserService;
 	    */
@@ -54,17 +54,23 @@ public class SecurityConfiguration {
 	 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 	        http
 	            .authorizeHttpRequests(authorize -> authorize
-	                .requestMatchers("/registration**",
-	                		         "/transfer/**",
-	                		         "/solde/**", 
-	                		         "/addRelation/**",  
+	                .requestMatchers(
+	                		"/transfer/**",
+           		            "/solde/**", 
+           		            "/addRelation/**"
+	                		)  // Les URL que seuls les utilisateurs authentifiés peuvent accéder
+	                .authenticated()
+	                .requestMatchers(
+	                		         
+	                		         "/registration**",
 	                		         "/oauth2/authorization/**",
 	                		         "/js/**", 
 	                		         "/css/**", 
 	                		         "/img/**", 
 	                		         "/webjars/**")
 	                .permitAll()
-	                .anyRequest().authenticated()	            
+	                .anyRequest()
+	                //.authenticated()	            
 	            )
 	            .formLogin(form -> form
 	                .loginPage("/login")

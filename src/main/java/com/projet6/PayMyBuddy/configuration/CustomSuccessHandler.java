@@ -91,4 +91,5 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler  {
 
         new DefaultRedirectStrategy().sendRedirect(request, response, redirectUrl);     
     }
+	
 }
