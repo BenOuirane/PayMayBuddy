@@ -52,7 +52,6 @@ public class ConnectionServiceImpl implements ConnectionService {
         userRepository.save(currentUser);
     }
 	
-
 	@Override
 	public String getConnectionsToTransferAmounOfMoney(@RequestParam(defaultValue = "0") int page, Model model, HttpServletRequest request) {
 		 HttpSession session = request.getSession();

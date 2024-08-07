@@ -61,7 +61,7 @@ public class SecurityConfiguration {
 	                		)  // Les URL que seuls les utilisateurs authentifiés peuvent accéder
 	                .authenticated()
 	                .requestMatchers(
-	                		         
+	    
 	                		         "/registration**",
 	                		         "/oauth2/authorization/**",
 	                		         "/js/**", 
@@ -70,7 +70,7 @@ public class SecurityConfiguration {
 	                		         "/webjars/**")
 	                .permitAll()
 	                .anyRequest()
-	                //.authenticated()	            
+	                .authenticated()	            
 	            )
 	            .formLogin(form -> form
 	                .loginPage("/login")
