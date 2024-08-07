@@ -13,7 +13,7 @@
 <body>
 
 <!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="Barre de navigation principale">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Pay My Buddy</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,20 +22,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/solde}">Solde</a>
+                    <a class="nav-link" th:href="@{/solde}" aria-label="Voir le solde">Solde</a>
                 </li>
                 <li class="nav-item">
-             <!--  <a class="nav-link active" th:href="@{/transfer}">Transférer</a>  -->      
-                   <a class="nav-link active" th:href="@{/transfer/page}">Transférer</a>                        
+                   <a class="nav-link active" th:href="@{/transfer/page}" aria-label="Page de transfert">Transférer</a>                        
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/profil}">Profil</a>
+                    <a class="nav-link" th:href="@{/profil}" aria-label="Voir votre profil">Profil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/ajouter-relation}">Ajouter relation</a>
+                    <a class="nav-link" th:href="@{/ajouter-relation}" aria-label="Ajouter une relation">Ajouter relation</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link" th:href="@{/logout}">Se déconnecter</a>
+                    <a class="nav-link" th:href="@{/logout}" aria-label="Se déconnecter">Se déconnecter</a>
                 </li>
             </ul>
         </div>
@@ -44,34 +43,33 @@
 
 <!-- Transfer Section -->
 <div class="container mt-5">
-<div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
         <p th:text="${errorMessage}"></p>
     </div>
     <div th:if="${successMessage}" class="alert alert-success" role="alert">
         <p th:text="${successMessage}"></p>
     </div>
 
-    <form id="relationForm"  th:action="@{/processTransfer}" method="post">
+    <form id="relationForm" th:action="@{/processTransfer}" method="post">
         <div class="form-row">
             <div class="form-group col-md-4">
-               <label for="relationSearch"><!--  Rechercher une relation --></label> 
-               <select id="relationOption" name="relationOption" class="form-control">
-                 <option value="">Sélectionnez une option</option>
+             <label for="relationOption">  <!--  Rechercher une relation --></label>
+               <select id="relationOption" name="relationOption" class="form-control" aria-required="true">
+                 <option value="">Sélectionnez une relation</option>
                  <option th:each="connection : ${connections}" th:value="${connection.email}" th:text="${connection.username}">Relation</option>
                </select>           
             </div>
             <div class="form-group col-md-4">
-              <label for="description"> <!--Description-->  </label>  
-                <input type="text" class="form-control" id="description" name="description" placeholder="Description">
+             <label for="description"><!--    Description  --> </label>  
+                <input type="text" class="form-control" id="description" name="description" placeholder="Description" aria-required="true">
             </div>
             <div class="form-group col-md-2">
-            <label for="amount"> <!-- Montant--></label>   
-                <input type="number" class="form-control" id="amount" name="amount" placeholder="Montant">
+                <label for="amount">   <!--  Montant  -->  </label>  
+                <input type="number" class="form-control" id="amount" name="amount" placeholder="Montant" aria-required="true">
             </div>
             <div class="form-group col-md-2">
                 <button type="button" class="btn btn-primary mt-4" onclick="confirmAddRelation()">Payer</button>
             </div>
-            
         </div>
     </form>
 
@@ -80,43 +78,40 @@
     <!-- Transactions Table -->
     <div class="table-responsive">
         <table class="table">
+            <caption>Table des transactions relationnelles</caption>
             <thead>
                 <tr>
-                    <th>Mes Transactions Relationes</th>
+                    <th>Relation</th>
                     <th>Description</th>
                     <th>Montant</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Sample rows for demonstration purposes -->
-               <tr th:each="transaction : ${transactionPage?.content}">
-                <td th:text="${transaction.receiver.username}">Relation</td>
-                <td th:text="${transaction.description}">Description</td>
-                <td th:text="${transaction.amount + '€'}">Montant</td>
-            </tr>
-                <!-- Add more rows as needed -->
+                <tr th:each="transaction : ${transactionPage?.content}">
+                    <td th:text="${transaction.receiver.username}">Relation</td>
+                    <td th:text="${transaction.description}">Description</td>
+                    <td th:text="${transaction.amount + '€'}">Montant</td>
+                </tr>
             </tbody>
         </table>
-        
-<!-- Pagination Links -->
 
-<div>
-    <ul class="pagination">
-        <li th:if="${transactionPage != null and transactionPage.hasPrevious()}" class="page-item">
-            <a class="page-link" th:href="@{/transfer/page(page=${transactionPage.number - 1})}">Précédent</a>
-        </li>
-        <li th:if="${transactionPage != null and transactionPage.totalPages != null}" th:each="i : ${#numbers.sequence(0, transactionPage.totalPages - 1)}" class="page-item" th:classappend="${i == transactionPage.number} ? 'active'">
-            <a class="page-link" th:href="@{/transfer/page(page=${i})}" th:text="${i + 1}">1</a>
-        </li>
-        <li th:if="${transactionPage != null and transactionPage.hasNext()}" class="page-item">
-            <a class="page-link" th:href="@{/transfer/page(page=${transactionPage.number + 1})}">Suivant</a>
-        </li>
-    </ul>
-</div>
+        <!-- Pagination Links -->
+        <div>
+            <ul class="pagination">
+                <li th:if="${transactionPage != null and transactionPage.hasPrevious()}" class="page-item">
+                    <a class="page-link" th:href="@{/transfer/page(page=${transactionPage.number - 1})}" aria-label="Page précédente">Précédent</a>
+                </li>
+                <li th:if="${transactionPage != null and transactionPage.totalPages != null}" th:each="i : ${#numbers.sequence(0, transactionPage.totalPages - 1)}" class="page-item" th:classappend="${i == transactionPage.number} ? 'active'">
+                    <a class="page-link" th:href="@{/transfer/page(page=${i})}" th:text="${i + 1}" aria-label="Page ${i + 1}">${i + 1}</a>
+                </li>
+                <li th:if="${transactionPage != null and transactionPage.hasNext()}" class="page-item">
+                    <a class="page-link" th:href="@{/transfer/page(page=${transactionPage.number + 1})}" aria-label="Page suivante">Suivant</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
- 
-
-<!-- Modal -->
+    <!-- Modal -->
     <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -136,18 +131,20 @@
             </div>
         </div>
     </div>
+</div>
+
 <!-- Bootstrap JS and jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-        function confirmAddRelation() {
-            $('#confirmModal').modal('show');
-        }
+    function confirmAddRelation() {
+        $('#confirmModal').modal('show');
+    }
 
-        function submitForm() {
-            $('#relationForm').submit();
-        }
+    function submitForm() {
+        $('#relationForm').submit();
+    }
 </script>
 </body>
 </html>

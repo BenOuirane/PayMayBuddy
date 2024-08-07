@@ -48,21 +48,21 @@
 </nav>
 
 <!-- Add Relation Section -->
-<div class="container content-container">
-   <!--  <h2 class="text-center">Ajouter une relation</h2> --> 
-    <div class="row justify-content-center mt-4">
+<main class="container content-container">
+    <section class="row justify-content-center mt-4">
         <div class="col-md-6">
+           <!--  <h2 class="text-center mb-4">Ajouter une relation</h2> -->
             <form id="relationForm" th:action="@{/addRelation}" method="post">
                 <div class="form-group">
                     <label for="relationSearch">Chercher une relation</label>
                     <div class="input-group">
-                        <input type="text" id="relationSearch" name="relationSearch" class="form-control" placeholder="Entrez un email d'utilisateur">
+                        <input type="text" id="relationSearch" name="relationSearch" class="form-control" placeholder="Entrez un email d'utilisateur" aria-describedby="searchButton">
                         <div class="input-group-append">
-                            <button type="button" class="btn btn-warning ml-2" onclick="confirmAddRelation()">Ajouter</button>
+                            <button type="button" id="searchButton" class="btn btn-warning ml-2" onclick="confirmAddRelation()">Ajouter</button>
                         </div>
                     </div>
                 </div>
-                 <!-- Display error message if present -->
+                <!-- Display error message if present -->
                 <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
                     <span th:text="${errorMessage}"></span>
                 </div>
@@ -72,8 +72,8 @@
                 </div>
             </form>
         </div>
-    </div>
-</div>
+    </section>
+</main>
 
 <!-- Modal -->
 <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">

@@ -16,7 +16,7 @@
          <div th:if="${param.logout}">
              <div class="alert alert-info" role="alert">You have been logged out.</div>
          </div>
-            <div class="title-box" role="titre de la modal">Pay My Buddy</div>
+            <div class="title-box" role="titre de l'application">Pay My Buddy</div>
             <form th:action="@{/login}"  method="post">
                 <div class="form-group">
                     <input name ="username" type="email" class="form-control" id="email" placeholder="Email " autofocus="autofocus">
@@ -27,9 +27,9 @@
                 <button type="submit" class="btn btn-primary btn-login">Se connecter</button>
             </form>
             <div class="form-group">
-						<span>New user? <a href="/" th:href="@{/registration}">Register
+						<span>New user? <a href="/" th:href="@{/registration}" aria-label="Register a new account">Register
 								here</a></span>
-				    	<span>Or <a href="/"  th:href="@{/oauth2/authorization/github}" >Login with GitHub</a></span>			
+				    	<span>Or <a href="/"  th:href="@{/oauth2/authorization/github}"  aria-label="Login with GitHub">Login with GitHub</a></span>			
 		    </div>
         </div>
     </div>

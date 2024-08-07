@@ -24,7 +24,6 @@ public class Transaction {
     @JoinColumn(name = "receiver_id")
     private User receiver;
     private String description;
-    @SuppressWarnings("unused")
 	private Date transactionDate;
     private double amount;
     private double fee; // Add this line
@@ -54,11 +53,11 @@ public class Transaction {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	/*
+	
 	public Date getTransactionDate() {
 		return transactionDate;
 	}
-	*/
+	
 	public void setTransactionDate(Date transactionDate) {
 		this.transactionDate = transactionDate;
 	}
